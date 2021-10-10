@@ -10,20 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import models.Note;
 
 public class NoteServlet extends HttpServlet {
-
+    
+     Note note = new Note();
+     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String path = getServletContext().getRealPath("/WEB-INF/note.txt");
-
         BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-
-        Note note = new Note(br.readLine(), br.readLine());
-
+        
+        note.setTitle(br.readLine());
+        note.setContent(br.readLine());
+        
         request.setAttribute("title", note.getTitle());
-        request.setAttribute("contents", note.getContent());
-
+             
         if (request.getParameter("edit") == null) {
             
             getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp").forward(request, response);
@@ -41,7 +42,7 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+          
     }
 
 }
